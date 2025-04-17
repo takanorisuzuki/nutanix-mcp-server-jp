@@ -1,0 +1,155 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "Nutanix MCP Server",
+      "description": "Nutanix のクラスタおよび仮想マシンの情報を取得します。",
+      "version": "v1"
+    },
+    "servers": [
+      {
+        "url": "http://host.containers.internal:8000"
+      }
+    ],
+    "paths": {
+      "/clusters": {
+        "get": {
+          "summary": "Nutanix クラスタの一覧を取得します。",
+          "description": "Nutanix クラスタのフォーマット済み情報を取得します。",
+          "operationId": "getClusters",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "クラスタ情報のリストを返します。",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ClusterSummary"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/vms": {
+        "get": {
+          "summary": "Nutanix 仮想マシンの一覧を取得します。",
+          "description": "Nutanix クラスタ上の仮想マシン情報を取得します。",
+          "operationId": "getVms",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "仮想マシン情報のリストを返します。",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/VmSummary"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "ClusterSummary": {
+          "type": "object",
+          "properties": {
+            "extId": { "type": "string" },
+            "name": { "type": "string" },
+            "vmCount": { "type": "integer" },
+            "inefficientVmCount": { "type": "integer" },
+            "numberOfNodes": { "type": "integer" },
+            "nodeList": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "nodeUuid": { "type": "string" },
+                  "controllerVmIp": { "type": "string" },
+                  "hostIp": { "type": "string" }
+                }
+              }
+            },
+            "hypervisorTypes": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "clusterSoftwareMap": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "softwareType": { "type": "string" },
+                  "version": { "type": "string" }
+                }
+              }
+            },
+            "timezone": { "type": "string" },
+            "isLts": { "type": "boolean" },
+            "redundancyFactor": { "type": "integer" },
+            "currentFaultTolerance": { "type": "string" },
+            "desiredFaultTolerance": { "type": "string" },
+            "nameServerIpList": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "ntpServerFqdns": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "upgradeStatus": { "type": "string" }
+          }
+        },
+        "VmSummary": {
+          "type": "object",
+          "properties": {
+            "extId": { "type": "string" },
+            "name": { "type": "string" },
+            "createTime": { "type": "string", "format": "date-time" },
+            "updateTime": { "type": "string", "format": "date-time" },
+            "powerState": { "type": "string" },
+            "numSockets": { "type": "integer" },
+            "numCoresPerSocket": { "type": "integer" },
+            "memorySizeBytes": { "type": "integer" },
+            "machineType": { "type": "string" },
+            "hardwareClockTimezone": { "type": "string" },
+            "protectionType": { "type": "string" },
+            "hostId": { "type": ["string", "null"] },
+            "clusterId": { "type": "string" },
+            "vcpu": { "type": ["integer", "null"] },
+            "memoryGiB": { "type": ["number", "null"] },
+            "diskList": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "deviceBus": { "type": "string" },
+                  "isCdrom": { "type": "boolean" },
+                  "sizeBytes": { "type": "integer" }
+                }
+              }
+            },
+            "nicList": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "subnetName": { "type": ["string", "null"] },
+                  "ipAddress": { "type": ["string", "null"] }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

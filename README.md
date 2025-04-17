@@ -6,9 +6,33 @@
 本プロジェクトは、Nutanix環境を対象とした Model Context Protocol (MCP) サーバーの Minimum Viable Product (MVP) を実装するものです。主な目的は、FastAPI を利用して Nutanix Prism Central からクラスタ情報を取得することにあり、本 MVP は将来的な機能拡張（追加の情報取得、モデル操作、セキュリティ強化など）の基盤となります。
 プロトタイプのため本番環境では利用しないでください。
 
+## 動作環境
+
+- OS: macOS, Linux, Windows（WSL2含む）
+- Python: 3.12 以上推奨
+- pip: 23.x 以上推奨
+- Nutanix Prism Central API バージョン: v4.0.2（Cluster Management API）
+- Nutanix Prism Central API バージョン: v4.0（Virtual Machine Management API）
+
 ## 使い方
 
-※ サーバーを起動する前に、ルートディレクトリに `.env` ファイルを作成してください。
+### セットアップ手順
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/takanorisuzuki/nutanix-mcp-server-jp.git
+cd nutanix-mcp-server-jp
+
+# 仮想環境を作成・有効化（任意）
+python3 -m venv venv
+source venv/bin/activate  # Windows の場合は venv\Scripts\activate
+
+# 依存パッケージをインストール
+pip install -r requirements.txt
+
+# .env ファイルを作成
+cp .env.example .env
+```
 
 ## .env ファイルの書き方
 
